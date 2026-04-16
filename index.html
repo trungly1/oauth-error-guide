@@ -50,8 +50,9 @@
         --code-br: #151d2e;
 
         --font-display: "Outfit", sans-serif;
-        --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo,
-          Monaco, Consolas, monospace;
+        --font-mono:
+          "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+          Consolas, monospace;
 
         --radius: 14px;
         --radius-sm: 10px;
@@ -181,7 +182,11 @@
         width: 42px;
         height: 42px;
         border-radius: 12px;
-        background: linear-gradient(135deg, rgba(94, 173, 255, 0.15), rgba(110, 231, 160, 0.1));
+        background: linear-gradient(
+          135deg,
+          rgba(94, 173, 255, 0.15),
+          rgba(110, 231, 160, 0.1)
+        );
         border: 1px solid rgba(94, 173, 255, 0.2);
         font-size: 22px;
         flex-shrink: 0;
@@ -223,7 +228,9 @@
         font-family: var(--font-display);
         font-size: 14px;
         outline: none;
-        transition: border-color 0.2s, box-shadow 0.2s;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
       }
       .search-bar input::placeholder {
         color: var(--muted);
@@ -384,7 +391,9 @@
         padding: 26px 28px;
         margin: 24px 0;
         box-shadow: var(--shadow-sm);
-        transition: opacity 0.2s, transform 0.2s;
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
       }
       section.card.filtered-out {
         display: none;
@@ -458,7 +467,7 @@
       .tag.http {
         font-family: var(--font-mono);
         font-size: 11px;
-        background: rgba(255,255,255,0.04);
+        background: rgba(255, 255, 255, 0.04);
         color: var(--muted);
         border: 1px solid var(--border);
       }
@@ -502,42 +511,54 @@
         border-color: var(--red-br);
         border-left-color: var(--red);
       }
-      .callout.warning .head { color: var(--red); }
+      .callout.warning .head {
+        color: var(--red);
+      }
 
       .callout.caution {
         background: var(--orange-bg);
         border-color: var(--orange-br);
         border-left-color: var(--orange);
       }
-      .callout.caution .head { color: var(--orange); }
+      .callout.caution .head {
+        color: var(--orange);
+      }
 
       .callout.note {
         background: var(--blue-bg);
         border-color: var(--blue-br);
         border-left-color: var(--blue);
       }
-      .callout.note .head { color: var(--blue); }
+      .callout.note .head {
+        color: var(--blue);
+      }
 
       .callout.important {
         background: var(--purple-bg);
         border-color: var(--purple-br);
         border-left-color: var(--purple);
       }
-      .callout.important .head { color: var(--purple); }
+      .callout.important .head {
+        color: var(--purple);
+      }
 
       .callout.tip {
         background: var(--green-bg);
         border-color: var(--green-br);
         border-left-color: var(--green);
       }
-      .callout.tip .head { color: var(--green); }
+      .callout.tip .head {
+        color: var(--green);
+      }
 
       .callout.resolution {
         background: var(--green-bg);
         border-color: var(--green-br);
         border-left-color: var(--green);
       }
-      .callout.resolution .head { color: var(--green); }
+      .callout.resolution .head {
+        color: var(--green);
+      }
 
       /* ==================== DETAILS ==================== */
       details {
@@ -561,7 +582,9 @@
         align-items: center;
         gap: 10px;
         color: var(--text-secondary);
-        transition: color 0.15s, background 0.15s;
+        transition:
+          color 0.15s,
+          background 0.15s;
         user-select: none;
       }
       details > summary:hover {
@@ -791,15 +814,33 @@
       .env-ref {
         animation: fadeInUp 0.5s ease 0.12s both;
       }
-      section.card:nth-of-type(1) { animation: fadeInUp 0.4s ease 0.15s both; }
-      section.card:nth-of-type(2) { animation: fadeInUp 0.4s ease 0.18s both; }
-      section.card:nth-of-type(3) { animation: fadeInUp 0.4s ease 0.21s both; }
-      section.card:nth-of-type(4) { animation: fadeInUp 0.4s ease 0.24s both; }
-      section.card:nth-of-type(5) { animation: fadeInUp 0.4s ease 0.27s both; }
-      section.card:nth-of-type(6) { animation: fadeInUp 0.4s ease 0.30s both; }
-      section.card:nth-of-type(7) { animation: fadeInUp 0.4s ease 0.33s both; }
-      section.card:nth-of-type(8) { animation: fadeInUp 0.4s ease 0.36s both; }
-      section.card:nth-of-type(9) { animation: fadeInUp 0.4s ease 0.39s both; }
+      section.card:nth-of-type(1) {
+        animation: fadeInUp 0.4s ease 0.15s both;
+      }
+      section.card:nth-of-type(2) {
+        animation: fadeInUp 0.4s ease 0.18s both;
+      }
+      section.card:nth-of-type(3) {
+        animation: fadeInUp 0.4s ease 0.21s both;
+      }
+      section.card:nth-of-type(4) {
+        animation: fadeInUp 0.4s ease 0.24s both;
+      }
+      section.card:nth-of-type(5) {
+        animation: fadeInUp 0.4s ease 0.27s both;
+      }
+      section.card:nth-of-type(6) {
+        animation: fadeInUp 0.4s ease 0.3s both;
+      }
+      section.card:nth-of-type(7) {
+        animation: fadeInUp 0.4s ease 0.33s both;
+      }
+      section.card:nth-of-type(8) {
+        animation: fadeInUp 0.4s ease 0.36s both;
+      }
+      section.card:nth-of-type(9) {
+        animation: fadeInUp 0.4s ease 0.39s both;
+      }
     </style>
   </head>
   <body>
@@ -817,7 +858,9 @@
               across K-Series environments.
             </p>
           </div>
-          <span class="version-badge" id="version-badge">v2.0 · Updated <span id="last-updated"></span></span>
+          <span class="version-badge" id="version-badge"
+            >v2.0 · Updated <span id="last-updated"></span
+          ></span>
         </div>
 
         <div class="search-bar">
@@ -903,7 +946,7 @@
                 </td>
                 <td><code>auth.lsk-prod.app</code></td>
                 <td><code>auth.lsk-prod.app</code></td>
-                <td><code>devp-v2</code></td>
+                <td><code>devp-v2-prod</code></td>
               </tr>
             </tbody>
           </table>
@@ -924,24 +967,35 @@
       </div>
 
       <!-- Wrong Environment -->
-      <section class="card" id="wrong-environment" data-search="wrong environment client not found mismatch trial production lsk-prod lsk-trial devp-v2-demo">
+      <section
+        class="card"
+        id="wrong-environment"
+        data-search="wrong environment client not found mismatch trial production lsk-prod lsk-trial devp-v2-demo"
+      >
         <div class="card-header">
           <h2>🌐 Wrong Environment</h2>
           <span class="tag env">Environment Mismatch</span>
-          <a href="#wrong-environment" class="anchor-link" title="Copy link">#</a>
+          <a href="#wrong-environment" class="anchor-link" title="Copy link"
+            >#</a
+          >
         </div>
 
         <div class="callout warning">
           <div class="head">⚠️ Warning</div>
           <div class="body">
-            Always verify your authorization URL matches your client's environment.
-            Mixing trial and production credentials is a common source of
+            Always verify your authorization URL matches your client's
+            environment. Mixing trial and production credentials is a common
+            source of
             <code class="inline">Client not found</code> errors.
           </div>
         </div>
 
         <figure>
-          <a href="https://632df67d.oauthimages.pages.dev/assets/clientNotFound.png" target="_blank" rel="noopener">
+          <a
+            href="https://632df67d.oauthimages.pages.dev/assets/clientNotFound.png"
+            target="_blank"
+            rel="noopener"
+          >
             <img
               src="https://632df67d.oauthimages.pages.dev/assets/clientNotFound.png"
               alt="Client not found error screenshot"
@@ -961,8 +1015,11 @@
             <ul>
               <li>
                 <strong>Client ID:</strong>
-                <code class="inline">devp-v2-demo-dasxtrial-b69ffe954c5cd33c57a79a94780eb2ab</code>
-                — belongs to <strong>trial</strong> (prefix: <code class="inline">devp-v2-demo</code>)
+                <code class="inline"
+                  >devp-v2-demo-dasxtrial-b69ffe954c5cd33c57a79a94780eb2ab</code
+                >
+                — belongs to <strong>trial</strong> (prefix:
+                <code class="inline">devp-v2-demo</code>)
               </li>
               <li><strong>Authorization URL used:</strong></li>
             </ul>
@@ -979,9 +1036,11 @@
             <div class="callout note">
               <div class="head">📝 Note</div>
               <div class="body">
-                The URL targets <code class="inline">lsk-prod.app</code> (production), but the
-                <code class="inline">client_id</code> is a <strong>trial</strong> client.
-                These environments are isolated — clients are not shared.
+                The URL targets
+                <code class="inline">lsk-prod.app</code> (production), but the
+                <code class="inline">client_id</code> is a
+                <strong>trial</strong> client. These environments are isolated —
+                clients are not shared.
               </div>
             </div>
           </div>
@@ -993,11 +1052,12 @@
             <div class="callout resolution">
               <div class="head">🛠 Fix</div>
               <div class="body">
-                Match your authorization URL to your client's environment.
-                Check the client ID prefix: <code class="inline">devp-v2-demo</code> → use
-                <code class="inline">auth.lsk-trial.app</code>; no <code class="inline">demo</code> suffix → use
-                <code class="inline">auth.lsk-prod.app</code>.
-                Refer to the Environment Quick Reference table above.
+                Match your authorization URL to your client's environment. Check
+                the client ID prefix: <code class="inline">devp-v2-demo</code> →
+                use <code class="inline">auth.lsk-trial.app</code>; no
+                <code class="inline">demo</code> suffix → use
+                <code class="inline">auth.lsk-prod.app</code>. Refer to the
+                Environment Quick Reference table above.
               </div>
             </div>
           </div>
@@ -1005,11 +1065,20 @@
       </section>
 
       <!-- Incorrect Redirect URI -->
-      <section class="card" id="incorrect-redirect-uri" data-search="redirect uri invalid parameter trailing slash http https mismatch redirect_uri">
+      <section
+        class="card"
+        id="incorrect-redirect-uri"
+        data-search="redirect uri invalid parameter trailing slash http https mismatch redirect_uri"
+      >
         <div class="card-header">
           <h2>🔗 Incorrect Redirect URI</h2>
           <span class="tag uri">URI Mismatch</span>
-          <a href="#incorrect-redirect-uri" class="anchor-link" title="Copy link">#</a>
+          <a
+            href="#incorrect-redirect-uri"
+            class="anchor-link"
+            title="Copy link"
+            >#</a
+          >
         </div>
 
         <div class="callout caution">
@@ -1017,12 +1086,17 @@
           <div class="body">
             The <code class="inline">redirect_uri</code> must be an
             <strong>exact string match</strong> — including protocol, path, and
-            trailing slash. Even a single missing <code class="inline">/</code> will cause the request to fail.
+            trailing slash. Even a single missing
+            <code class="inline">/</code> will cause the request to fail.
           </div>
         </div>
 
         <figure>
-          <a href="https://632df67d.oauthimages.pages.dev/assets/invalid_redirect.png" target="_blank" rel="noopener">
+          <a
+            href="https://632df67d.oauthimages.pages.dev/assets/invalid_redirect.png"
+            target="_blank"
+            rel="noopener"
+          >
             <img
               src="https://632df67d.oauthimages.pages.dev/assets/invalid_redirect.png"
               alt="Invalid redirect URI error screenshot"
@@ -1036,7 +1110,9 @@
           <summary>Error Details &amp; Example</summary>
           <div class="content">
             <div class="status-row">
-              <span class="tag http">Error: Invalid parameter: redirect_uri</span>
+              <span class="tag http"
+                >Error: Invalid parameter: redirect_uri</span
+              >
             </div>
 
             <div class="table-wrap">
@@ -1064,7 +1140,10 @@
             <ul>
               <li>Trailing slash missing or incorrectly added</li>
               <li>Typo or character encoding mismatch</li>
-              <li>Using <code class="inline">http://</code> instead of <code class="inline">https://</code></li>
+              <li>
+                Using <code class="inline">http://</code> instead of
+                <code class="inline">https://</code>
+              </li>
             </ul>
           </div>
         </details>
@@ -1075,9 +1154,11 @@
             <div class="callout resolution">
               <div class="head">🛠 Fix</div>
               <div class="body">
-                Copy the <strong>exact</strong> redirect URI from the API credential provisioning email or developer portal.
-                Compare character-by-character — pay attention to trailing slashes, protocol scheme, and URL encoding.
-                If you need the redirect URI updated, contact TPS with your client ID.
+                Copy the <strong>exact</strong> redirect URI from the API
+                credential provisioning email or developer portal. Compare
+                character-by-character — pay attention to trailing slashes,
+                protocol scheme, and URL encoding. If you need the redirect URI
+                updated, contact TPS with your client ID.
               </div>
             </div>
           </div>
@@ -1085,7 +1166,11 @@
       </section>
 
       <!-- Invalid Scope -->
-      <section class="card" id="invalid-scope" data-search="invalid scope financial-api orders-api items offline_access staff-api scope names hyphen underscore space delimited">
+      <section
+        class="card"
+        id="invalid-scope"
+        data-search="invalid scope financial-api orders-api items offline_access staff-api scope names hyphen underscore space delimited"
+      >
         <div class="card-header">
           <h2>🔑 Invalid Scope</h2>
           <span class="tag scope">Scope Error</span>
@@ -1095,8 +1180,9 @@
         <div class="callout important">
           <div class="head">📌 Important</div>
           <div class="body">
-            Scope names must <strong>exactly match</strong> the values configured on the authorization server.
-            Underscores vs. hyphens are a frequent mistake.
+            Scope names must <strong>exactly match</strong> the values
+            configured on the authorization server. Underscores vs. hyphens are
+            a frequent mistake.
           </div>
         </div>
 
@@ -1145,8 +1231,11 @@
             <div class="callout tip">
               <div class="head">💡 Tip</div>
               <div class="body">
-                Multiple scopes must be <strong>space-delimited</strong> before URL encoding. Example:
-                <code class="inline">scope=financial-api%20orders-api%20items</code>
+                Multiple scopes must be <strong>space-delimited</strong> before
+                URL encoding. Example:
+                <code class="inline"
+                  >scope=financial-api%20orders-api%20items</code
+                >
               </div>
             </div>
           </div>
@@ -1158,9 +1247,11 @@
             <div class="callout resolution">
               <div class="head">🛠 Fix</div>
               <div class="body">
-                Cross-reference your requested scopes against the valid scope list above.
-                Ensure you're using hyphens where required (not underscores) and that scope names
-                are space-separated in the raw value before URL encoding. Only request scopes your client has been provisioned for.
+                Cross-reference your requested scopes against the valid scope
+                list above. Ensure you're using hyphens where required (not
+                underscores) and that scope names are space-separated in the raw
+                value before URL encoding. Only request scopes your client has
+                been provisioned for.
               </div>
             </div>
           </div>
@@ -1168,23 +1259,37 @@
       </section>
 
       <!-- Incorrect K-Series User Credentials -->
-      <section class="card" id="incorrect-kseries-credentials" data-search="incorrect login credentials username password invalid login user account locked disabled realm">
+      <section
+        class="card"
+        id="incorrect-kseries-credentials"
+        data-search="incorrect login credentials username password invalid login user account locked disabled realm"
+      >
         <div class="card-header">
           <h2>👤 Incorrect K-Series User Credentials</h2>
           <span class="tag cred">Login Error</span>
-          <a href="#incorrect-kseries-credentials" class="anchor-link" title="Copy link">#</a>
+          <a
+            href="#incorrect-kseries-credentials"
+            class="anchor-link"
+            title="Copy link"
+            >#</a
+          >
         </div>
 
         <div class="callout warning">
           <div class="head">⚠️ Warning</div>
           <div class="body">
-            Trial and production environments maintain <strong>separate user directories</strong>.
-            Production credentials will not work in a trial environment and vice versa.
+            Trial and production environments maintain
+            <strong>separate user directories</strong>. Production credentials
+            will not work in a trial environment and vice versa.
           </div>
         </div>
 
         <figure>
-          <a href="https://632df67d.oauthimages.pages.dev/assets/invalidlogincredential.png" target="_blank" rel="noopener">
+          <a
+            href="https://632df67d.oauthimages.pages.dev/assets/invalidlogincredential.png"
+            target="_blank"
+            rel="noopener"
+          >
             <img
               src="https://632df67d.oauthimages.pages.dev/assets/invalidlogincredential.png"
               alt="Invalid login credentials screenshot"
@@ -1199,7 +1304,10 @@
           <div class="content">
             <ul>
               <li>Username or password is incorrect</li>
-              <li>Using production credentials in a trial environment (or vice versa)</li>
+              <li>
+                Using production credentials in a trial environment (or vice
+                versa)
+              </li>
               <li>The account does not exist in the selected product/realm</li>
               <li>Account may be locked or disabled</li>
             </ul>
@@ -1212,8 +1320,10 @@
             <div class="callout resolution">
               <div class="head">🛠 Fix</div>
               <div class="body">
-                Confirm you're logging in to the correct environment (trial vs. production).
-                Verify the username and password. If the account may be locked, contact TPS to check the account status in the appropriate realm.
+                Confirm you're logging in to the correct environment (trial vs.
+                production). Verify the username and password. If the account
+                may be locked, contact TPS to check the account status in the
+                appropriate realm.
               </div>
             </div>
           </div>
@@ -1229,19 +1339,26 @@
       </div>
 
       <!-- Invalid Code Grant -->
-      <section class="card" id="invalid-code-grant" data-search="invalid grant code not valid authorization code expired single use one time 15 seconds token exchange">
+      <section
+        class="card"
+        id="invalid-code-grant"
+        data-search="invalid grant code not valid authorization code expired single use one time 15 seconds token exchange"
+      >
         <div class="card-header">
           <h3>⏱️ Invalid Code Grant</h3>
           <span class="tag token">Token Exchange</span>
           <span class="tag http">400</span>
-          <a href="#invalid-code-grant" class="anchor-link" title="Copy link">#</a>
+          <a href="#invalid-code-grant" class="anchor-link" title="Copy link"
+            >#</a
+          >
         </div>
 
         <div class="callout caution">
           <div class="head">⚠️ Caution</div>
           <div class="body">
-            Authorization codes are <strong>single-use</strong> and expire in approximately
-            <strong>15 seconds</strong>. Do not reuse or cache them.
+            Authorization codes are <strong>single-use</strong> and expire in
+            approximately <strong>15 seconds</strong>. Do not reuse or cache
+            them.
           </div>
         </div>
 
@@ -1272,9 +1389,10 @@
             <div class="callout resolution">
               <div class="head">🛠 Fix</div>
               <div class="body">
-                Restart the authorization flow to obtain a fresh authorization code. Ensure your application
-                exchanges the code for tokens <strong>immediately</strong> after receiving it — automate
-                this step rather than copying manually. Never reuse a code.
+                Restart the authorization flow to obtain a fresh authorization
+                code. Ensure your application exchanges the code for tokens
+                <strong>immediately</strong> after receiving it — automate this
+                step rather than copying manually. Never reuse a code.
               </div>
             </div>
           </div>
@@ -1282,19 +1400,32 @@
       </section>
 
       <!-- Invalid Client Credentials -->
-      <section class="card" id="invalid-client-credentials" data-search="invalid client credentials authorization header base64 client_id client_secret Basic authentication 401">
+      <section
+        class="card"
+        id="invalid-client-credentials"
+        data-search="invalid client credentials authorization header base64 client_id client_secret Basic authentication 401"
+      >
         <div class="card-header">
           <h3>🔒 Invalid Client or Credentials</h3>
           <span class="tag cred">Client Auth</span>
           <span class="tag http">401</span>
-          <a href="#invalid-client-credentials" class="anchor-link" title="Copy link">#</a>
+          <a
+            href="#invalid-client-credentials"
+            class="anchor-link"
+            title="Copy link"
+            >#</a
+          >
         </div>
 
         <div class="callout important">
           <div class="head">📌 Important</div>
           <div class="body">
-            The <code class="inline">Authorization</code> header must be present and correctly formatted as
-            <strong>Basic base64(<code class="inline">client_id:client_secret</code>)</strong>.
+            The <code class="inline">Authorization</code> header must be present
+            and correctly formatted as
+            <strong
+              >Basic base64(<code class="inline">client_id:client_secret</code
+              >)</strong
+            >.
           </div>
         </div>
 
@@ -1303,9 +1434,15 @@
           <div class="content">
             <p><strong>Possible Causes:</strong></p>
             <ul>
-              <li><code class="inline">Authorization</code> header is missing entirely</li>
+              <li>
+                <code class="inline">Authorization</code> header is missing
+                entirely
+              </li>
               <li>Credentials are not Base64-encoded</li>
-              <li><code class="inline">client_id</code> or <code class="inline">client_secret</code> is incorrect</li>
+              <li>
+                <code class="inline">client_id</code> or
+                <code class="inline">client_secret</code> is incorrect
+              </li>
               <li>Using the wrong client credentials for the environment</li>
             </ul>
 
@@ -1340,9 +1477,11 @@ Authorization: Basic &lt;base64_value&gt;</code></pre>
             <div class="callout tip">
               <div class="head">💡 Tip</div>
               <div class="body">
-                Double-check you're using the correct client credentials for the target environment.
-                The <code class="inline">-n</code> flag in <code class="inline">echo</code> is critical — without it, a newline character
-                is appended, producing an incorrect Base64 value.
+                Double-check you're using the correct client credentials for the
+                target environment. The <code class="inline">-n</code> flag in
+                <code class="inline">echo</code> is critical — without it, a
+                newline character is appended, producing an incorrect Base64
+                value.
               </div>
             </div>
           </div>
@@ -1350,20 +1489,31 @@ Authorization: Basic &lt;base64_value&gt;</code></pre>
       </section>
 
       <!-- Incorrect Redirect URI (Token Exchange) -->
-      <section class="card" id="incorrect-redirect-token-exchange" data-search="incorrect redirect uri token exchange invalid grant redirect_uri mismatch trailing slash encoding">
+      <section
+        class="card"
+        id="incorrect-redirect-token-exchange"
+        data-search="incorrect redirect uri token exchange invalid grant redirect_uri mismatch trailing slash encoding"
+      >
         <div class="card-header">
           <h3>↔️ Incorrect Redirect URI (Token Exchange)</h3>
           <span class="tag uri">URI Mismatch</span>
           <span class="tag http">400</span>
-          <a href="#incorrect-redirect-token-exchange" class="anchor-link" title="Copy link">#</a>
+          <a
+            href="#incorrect-redirect-token-exchange"
+            class="anchor-link"
+            title="Copy link"
+            >#</a
+          >
         </div>
 
         <div class="callout warning">
           <div class="head">⚠️ Warning</div>
           <div class="body">
-            The <code class="inline">redirect_uri</code> in the <strong>token exchange request</strong>
-            must be <strong>identical</strong> to the one used in the original authorization request —
-            even though no redirect actually occurs at this step.
+            The <code class="inline">redirect_uri</code> in the
+            <strong>token exchange request</strong> must be
+            <strong>identical</strong> to the one used in the original
+            authorization request — even though no redirect actually occurs at
+            this step.
           </div>
         </div>
 
@@ -1372,7 +1522,10 @@ Authorization: Basic &lt;base64_value&gt;</code></pre>
           <div class="content">
             <p><strong>Possible Causes:</strong></p>
             <ul>
-              <li><code class="inline">redirect_uri</code> in the token request doesn't match the authorization step</li>
+              <li>
+                <code class="inline">redirect_uri</code> in the token request
+                doesn't match the authorization step
+              </li>
               <li>Trailing slash added or removed between steps</li>
               <li>URL encoding differences between requests</li>
             </ul>
@@ -1394,9 +1547,12 @@ Authorization: Basic &lt;base64_value&gt;</code></pre>
             <div class="callout resolution">
               <div class="head">🛠 Fix</div>
               <div class="body">
-                Use the <strong>exact same</strong> <code class="inline">redirect_uri</code> value in both your authorization
-                request and your token exchange request. Store the value in a variable or constant to prevent drift.
-                Compare the raw strings — even URL encoding differences will cause a mismatch.
+                Use the <strong>exact same</strong>
+                <code class="inline">redirect_uri</code> value in both your
+                authorization request and your token exchange request. Store the
+                value in a variable or constant to prevent drift. Compare the
+                raw strings — even URL encoding differences will cause a
+                mismatch.
               </div>
             </div>
           </div>
@@ -1412,19 +1568,26 @@ Authorization: Basic &lt;base64_value&gt;</code></pre>
       </div>
 
       <!-- Invalid Refresh Token -->
-      <section class="card" id="invalid-refresh-token" data-search="invalid refresh token expired rotation reuse grant_type refresh_token re-authentication offline_access">
+      <section
+        class="card"
+        id="invalid-refresh-token"
+        data-search="invalid refresh token expired rotation reuse grant_type refresh_token re-authentication offline_access"
+      >
         <div class="card-header">
           <h3>🔁 Invalid Refresh Token</h3>
           <span class="tag token">Refresh</span>
           <span class="tag http">400</span>
-          <a href="#invalid-refresh-token" class="anchor-link" title="Copy link">#</a>
+          <a href="#invalid-refresh-token" class="anchor-link" title="Copy link"
+            >#</a
+          >
         </div>
 
         <div class="callout caution">
           <div class="head">⚠️ Caution</div>
           <div class="body">
-            Refresh tokens are <strong>long-lived but not permanent</strong>. An expired, reused, or
-            malformed refresh token cannot be recovered — a full re-authentication is required.
+            Refresh tokens are <strong>long-lived but not permanent</strong>. An
+            expired, reused, or malformed refresh token cannot be recovered — a
+            full re-authentication is required.
           </div>
         </div>
 
@@ -1434,7 +1597,9 @@ Authorization: Basic &lt;base64_value&gt;</code></pre>
             <ul>
               <li>Refresh token has passed its expiry window</li>
               <li>Token was already used and the server enforces rotation</li>
-              <li>Refresh token is malformed or contains a transcription error</li>
+              <li>
+                Refresh token is malformed or contains a transcription error
+              </li>
               <li>Token belongs to a different client or environment</li>
             </ul>
           </div>
@@ -1446,10 +1611,13 @@ Authorization: Basic &lt;base64_value&gt;</code></pre>
             <div class="callout resolution">
               <div class="head">🛠 Fix</div>
               <div class="body">
-                Re-authenticate the user through the full authorization flow to obtain a new refresh token.
-                Implement <strong>token rotation handling</strong> in your client: when a refresh fails with
-                <code class="inline">invalid_grant</code>, redirect the user back through the authorization flow
-                automatically rather than surfacing a raw error. Ensure <code class="inline">offline_access</code>
+                Re-authenticate the user through the full authorization flow to
+                obtain a new refresh token. Implement
+                <strong>token rotation handling</strong> in your client: when a
+                refresh fails with <code class="inline">invalid_grant</code>,
+                redirect the user back through the authorization flow
+                automatically rather than surfacing a raw error. Ensure
+                <code class="inline">offline_access</code>
                 is included in your requested scopes to receive refresh tokens.
               </div>
             </div>
@@ -1466,19 +1634,26 @@ Authorization: Basic &lt;base64_value&gt;</code></pre>
       </div>
 
       <!-- Unauthorized Client -->
-      <section class="card" id="unauthorized-client" data-search="unauthorized client grant type not allowed authorization_code refresh_token client_credentials flow configuration">
+      <section
+        class="card"
+        id="unauthorized-client"
+        data-search="unauthorized client grant type not allowed authorization_code refresh_token client_credentials flow configuration"
+      >
         <div class="card-header">
           <h3>🚫 Unauthorized Client</h3>
           <span class="tag cred">Grant Type</span>
           <span class="tag http">400</span>
-          <a href="#unauthorized-client" class="anchor-link" title="Copy link">#</a>
+          <a href="#unauthorized-client" class="anchor-link" title="Copy link"
+            >#</a
+          >
         </div>
 
         <div class="callout important">
           <div class="head">📌 Important</div>
           <div class="body">
             This error occurs when the client attempts to use a
-            <code class="inline">grant_type</code> that has not been enabled for it on the authorization server.
+            <code class="inline">grant_type</code> that has not been enabled for
+            it on the authorization server.
           </div>
         </div>
 
@@ -1487,10 +1662,23 @@ Authorization: Basic &lt;base64_value&gt;</code></pre>
           <div class="content">
             <p><strong>Possible Causes:</strong></p>
             <ul>
-              <li>Client is not configured for the <code class="inline">authorization_code</code> grant type</li>
-              <li>Client is attempting <code class="inline">client_credentials</code> flow but is only approved for auth code flow</li>
-              <li>Attempting to use <code class="inline">refresh_token</code> grant but rotation or refresh is not enabled</li>
-              <li>Client configuration was changed or provisioned incorrectly</li>
+              <li>
+                Client is not configured for the
+                <code class="inline">authorization_code</code> grant type
+              </li>
+              <li>
+                Client is attempting
+                <code class="inline">client_credentials</code> flow but is only
+                approved for auth code flow
+              </li>
+              <li>
+                Attempting to use
+                <code class="inline">refresh_token</code> grant but rotation or
+                refresh is not enabled
+              </li>
+              <li>
+                Client configuration was changed or provisioned incorrectly
+              </li>
             </ul>
 
             <p><strong>Response:</strong></p>
@@ -1510,15 +1698,17 @@ Authorization: Basic &lt;base64_value&gt;</code></pre>
             <div class="callout resolution">
               <div class="head">🛠 Fix</div>
               <div class="body">
-                Confirm the grant type(s) your client has been provisioned for. If you require a different
-                grant type (e.g., <code class="inline">client_credentials</code>), contact TPS to update your client configuration.
-                The most common K-Series integration flow is <code class="inline">authorization_code</code> with PKCE.
+                Confirm the grant type(s) your client has been provisioned for.
+                If you require a different grant type (e.g.,
+                <code class="inline">client_credentials</code>), contact TPS to
+                update your client configuration. The most common K-Series
+                integration flow is
+                <code class="inline">authorization_code</code> with PKCE.
               </div>
             </div>
           </div>
         </details>
       </section>
-
     </div>
 
     <script>
@@ -1600,7 +1790,10 @@ Authorization: Basic &lt;base64_value&gt;</code></pre>
       document.querySelectorAll(".anchor-link").forEach((link) => {
         link.addEventListener("click", function (e) {
           e.preventDefault();
-          const url = window.location.origin + window.location.pathname + this.getAttribute("href");
+          const url =
+            window.location.origin +
+            window.location.pathname +
+            this.getAttribute("href");
           navigator.clipboard.writeText(url).then(() => {
             const original = this.textContent;
             this.textContent = "✓";
