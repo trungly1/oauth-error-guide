@@ -1,0 +1,1616 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🔐 K-Series Authentication Error Guide</title>
+    <meta
+      name="description"
+      content="A reference for diagnosing and resolving common OAuth/OIDC authentication errors across K-Series environments."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #08090c;
+        --panel: #0d1017;
+        --panel-2: #111621;
+        --panel-3: #151b28;
+        --text: #e2e6ef;
+        --text-secondary: #a4adc0;
+        --muted: #6b7a94;
+        --link: #5eadff;
+        --link-hover: #8fc8ff;
+        --border: #1a2236;
+        --border-hover: #263350;
+        --accent: #6ee7a0;
+        --accent-dim: rgba(110, 231, 160, 0.08);
+
+        --red: #ff6b6b;
+        --red-bg: #1e1114;
+        --red-br: #3a1520;
+        --orange: #ffb347;
+        --orange-bg: #1e1710;
+        --orange-br: #3a2c15;
+        --blue: #5eadff;
+        --blue-bg: #0e1724;
+        --blue-br: #152a45;
+        --purple: #b48eff;
+        --purple-bg: #16112a;
+        --purple-br: #261e42;
+        --green: #6ee7a0;
+        --green-bg: #0e1e16;
+        --green-br: #153528;
+
+        --code-bg: #090c14;
+        --code-br: #151d2e;
+
+        --font-display: "Outfit", sans-serif;
+        --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo,
+          Monaco, Consolas, monospace;
+
+        --radius: 14px;
+        --radius-sm: 10px;
+        --radius-xs: 6px;
+        --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+        --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.4);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-display);
+        font-weight: 400;
+        line-height: 1.6;
+        font-size: 15px;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Subtle grid background */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: radial-gradient(
+          rgba(94, 173, 255, 0.03) 1px,
+          transparent 1px
+        );
+        background-size: 32px 32px;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      a {
+        color: var(--link);
+        text-decoration: none;
+        transition: color 0.15s;
+      }
+      a:hover {
+        color: var(--link-hover);
+      }
+
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 1020px;
+        margin: 0 auto;
+        padding: 40px 24px 120px;
+      }
+
+      /* ==================== HERO ==================== */
+      header.hero {
+        position: relative;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 40px 36px 36px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+      header.hero::before {
+        content: "";
+        position: absolute;
+        top: -120px;
+        left: -80px;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(
+          circle,
+          rgba(94, 173, 255, 0.1),
+          transparent 65%
+        );
+        pointer-events: none;
+      }
+      header.hero::after {
+        content: "";
+        position: absolute;
+        top: -60px;
+        right: -40px;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(
+          circle,
+          rgba(110, 231, 160, 0.07),
+          transparent 65%
+        );
+        pointer-events: none;
+      }
+
+      .hero-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+        position: relative;
+        z-index: 1;
+      }
+
+      .title {
+        font-size: 30px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        line-height: 1.2;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .title .lock-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, rgba(94, 173, 255, 0.15), rgba(110, 231, 160, 0.1));
+        border: 1px solid rgba(94, 173, 255, 0.2);
+        font-size: 22px;
+        flex-shrink: 0;
+      }
+      .subtitle {
+        color: var(--text-secondary);
+        font-size: 15px;
+        font-weight: 400;
+        margin-top: 8px;
+        position: relative;
+        z-index: 1;
+      }
+      .version-badge {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
+        padding: 4px 12px;
+        border-radius: 999px;
+        white-space: nowrap;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ==================== SEARCH ==================== */
+      .search-bar {
+        margin: 24px 0 0;
+        position: relative;
+        z-index: 1;
+      }
+      .search-bar input {
+        width: 100%;
+        padding: 12px 16px 12px 44px;
+        background: var(--panel-2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        color: var(--text);
+        font-family: var(--font-display);
+        font-size: 14px;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+      .search-bar input::placeholder {
+        color: var(--muted);
+      }
+      .search-bar input:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(94, 173, 255, 0.1);
+      }
+      .search-bar .search-icon {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--muted);
+        pointer-events: none;
+        font-size: 16px;
+      }
+      .search-no-results {
+        display: none;
+        text-align: center;
+        padding: 40px 20px;
+        color: var(--muted);
+        font-size: 15px;
+      }
+      .search-no-results.visible {
+        display: block;
+      }
+
+      /* ==================== QUICK NAV ==================== */
+      .quick-nav {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 10px;
+        margin: 28px 0 12px;
+      }
+      .quick-nav a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 14px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        color: var(--text-secondary);
+        font-size: 13.5px;
+        font-weight: 500;
+        transition: all 0.2s;
+        text-decoration: none;
+      }
+      .quick-nav a:hover {
+        background: var(--panel-2);
+        border-color: var(--border-hover);
+        color: var(--text);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-sm);
+      }
+      .quick-nav a .nav-icon {
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+
+      /* ==================== ENV REFERENCE ==================== */
+      .env-ref {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 22px 24px;
+        margin: 28px 0;
+        box-shadow: var(--shadow-sm);
+      }
+      .env-ref h2 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .env-table {
+        overflow-x: auto;
+        border-radius: var(--radius-xs);
+        border: 1px solid var(--border);
+      }
+      .env-table table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .env-table th,
+      .env-table td {
+        padding: 10px 14px;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+        font-size: 13.5px;
+      }
+      .env-table thead th {
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text-secondary);
+        font-weight: 600;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .env-table tbody tr:last-child td {
+        border-bottom: none;
+      }
+      .env-table tbody tr:hover td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+      .env-table code {
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        background: rgba(255, 255, 255, 0.04);
+        padding: 2px 7px;
+        border-radius: 5px;
+        border: 1px solid var(--code-br);
+        white-space: nowrap;
+      }
+      .env-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+      }
+      .env-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+      .env-dot.trial {
+        background: var(--orange);
+        box-shadow: 0 0 6px rgba(255, 179, 71, 0.4);
+      }
+      .env-dot.prod {
+        background: var(--green);
+        box-shadow: 0 0 6px rgba(110, 231, 160, 0.4);
+      }
+
+      /* ==================== DIVIDER ==================== */
+      hr.divider {
+        border: none;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--border) 20%,
+          var(--border) 80%,
+          transparent
+        );
+        margin: 36px 0;
+      }
+
+      /* ==================== ERROR CARDS ==================== */
+      section.card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 26px 28px;
+        margin: 24px 0;
+        box-shadow: var(--shadow-sm);
+        transition: opacity 0.2s, transform 0.2s;
+      }
+      section.card.filtered-out {
+        display: none;
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 4px;
+        flex-wrap: wrap;
+      }
+      .card-header .anchor-link {
+        opacity: 0;
+        color: var(--muted);
+        font-size: 16px;
+        transition: opacity 0.15s;
+        text-decoration: none;
+        margin-left: -4px;
+      }
+      .card-header:hover .anchor-link {
+        opacity: 1;
+      }
+
+      h2 {
+        font-size: 21px;
+        font-weight: 700;
+        letter-spacing: -0.2px;
+        line-height: 1.3;
+      }
+      h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text);
+        line-height: 1.3;
+      }
+
+      .tag {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        padding: 3px 10px;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+      .tag.env {
+        background: rgba(94, 173, 255, 0.1);
+        color: var(--blue);
+        border: 1px solid rgba(94, 173, 255, 0.2);
+      }
+      .tag.uri {
+        background: rgba(255, 179, 71, 0.1);
+        color: var(--orange);
+        border: 1px solid rgba(255, 179, 71, 0.2);
+      }
+      .tag.scope {
+        background: rgba(180, 142, 255, 0.1);
+        color: var(--purple);
+        border: 1px solid rgba(180, 142, 255, 0.2);
+      }
+      .tag.cred {
+        background: rgba(255, 107, 107, 0.1);
+        color: var(--red);
+        border: 1px solid rgba(255, 107, 107, 0.2);
+      }
+      .tag.token {
+        background: rgba(110, 231, 160, 0.1);
+        color: var(--green);
+        border: 1px solid rgba(110, 231, 160, 0.2);
+      }
+      .tag.http {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        background: rgba(255,255,255,0.04);
+        color: var(--muted);
+        border: 1px solid var(--border);
+      }
+
+      p {
+        margin: 10px 0 14px;
+        color: var(--text);
+      }
+      p.muted {
+        color: var(--text-secondary);
+      }
+
+      /* ==================== CALLOUTS ==================== */
+      .callout {
+        border-radius: var(--radius-sm);
+        padding: 14px 16px;
+        margin: 16px 0;
+        border-left: 3px solid;
+        border-top: 1px solid;
+        border-right: 1px solid;
+        border-bottom: 1px solid;
+      }
+      .callout .head {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        margin-bottom: 8px;
+      }
+      .callout .body {
+        color: var(--text);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .callout.warning {
+        background: var(--red-bg);
+        border-color: var(--red-br);
+        border-left-color: var(--red);
+      }
+      .callout.warning .head { color: var(--red); }
+
+      .callout.caution {
+        background: var(--orange-bg);
+        border-color: var(--orange-br);
+        border-left-color: var(--orange);
+      }
+      .callout.caution .head { color: var(--orange); }
+
+      .callout.note {
+        background: var(--blue-bg);
+        border-color: var(--blue-br);
+        border-left-color: var(--blue);
+      }
+      .callout.note .head { color: var(--blue); }
+
+      .callout.important {
+        background: var(--purple-bg);
+        border-color: var(--purple-br);
+        border-left-color: var(--purple);
+      }
+      .callout.important .head { color: var(--purple); }
+
+      .callout.tip {
+        background: var(--green-bg);
+        border-color: var(--green-br);
+        border-left-color: var(--green);
+      }
+      .callout.tip .head { color: var(--green); }
+
+      .callout.resolution {
+        background: var(--green-bg);
+        border-color: var(--green-br);
+        border-left-color: var(--green);
+      }
+      .callout.resolution .head { color: var(--green); }
+
+      /* ==================== DETAILS ==================== */
+      details {
+        background: var(--panel-2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        margin: 16px 0;
+        overflow: hidden;
+        transition: border-color 0.2s;
+      }
+      details:hover {
+        border-color: var(--border-hover);
+      }
+      details > summary {
+        cursor: pointer;
+        list-style: none;
+        padding: 14px 16px;
+        font-weight: 600;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--text-secondary);
+        transition: color 0.15s, background 0.15s;
+        user-select: none;
+      }
+      details > summary:hover {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.02);
+      }
+      details > summary::-webkit-details-marker {
+        display: none;
+      }
+      details > summary::before {
+        content: "";
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-left: 5px solid var(--muted);
+        border-top: 4px solid transparent;
+        border-bottom: 4px solid transparent;
+        transition: transform 0.2s;
+        flex-shrink: 0;
+      }
+      details[open] > summary::before {
+        transform: rotate(90deg);
+      }
+      details[open] > summary {
+        border-bottom: 1px solid var(--border);
+      }
+      details .content {
+        padding: 16px;
+      }
+
+      /* ==================== FIGURES ==================== */
+      figure {
+        margin: 16px 0;
+        padding: 12px;
+        background: var(--panel-2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+      }
+      figure a {
+        display: block;
+      }
+      figure img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        border-radius: var(--radius-xs);
+        border: 1px solid var(--border);
+      }
+      figcaption {
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 10px;
+        text-align: center;
+      }
+
+      /* ==================== CODE ==================== */
+      code,
+      pre,
+      kbd {
+        font-family: var(--font-mono);
+      }
+      .code-block {
+        position: relative;
+        margin: 12px 0 16px;
+      }
+      pre {
+        background: var(--code-bg);
+        border: 1px solid var(--code-br);
+        border-radius: var(--radius-sm);
+        padding: 16px 18px;
+        overflow-x: auto;
+        font-size: 13px;
+        line-height: 1.65;
+        color: var(--text-secondary);
+      }
+      code.inline {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--code-br);
+        border-radius: 5px;
+        padding: 1px 6px;
+        font-size: 13px;
+        white-space: nowrap;
+        color: var(--text);
+      }
+
+      .copy-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xs);
+        color: var(--muted);
+        font-family: var(--font-display);
+        font-size: 12px;
+        font-weight: 500;
+        padding: 5px 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.15s;
+        z-index: 2;
+      }
+      .copy-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text);
+        border-color: var(--border-hover);
+      }
+      .copy-btn.copied {
+        color: var(--green);
+        border-color: rgba(110, 231, 160, 0.3);
+      }
+
+      /* ==================== TABLES ==================== */
+      .table-wrap {
+        overflow-x: auto;
+        margin: 12px 0 16px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+        font-size: 14px;
+      }
+      thead th {
+        text-align: left;
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text-secondary);
+        font-weight: 600;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      tbody tr:last-child td {
+        border-bottom: none;
+      }
+      tbody tr:hover td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      /* ==================== LISTS ==================== */
+      ul {
+        margin: 8px 0 14px 20px;
+      }
+      li {
+        margin: 5px 0;
+        color: var(--text);
+        font-size: 14px;
+      }
+      li::marker {
+        color: var(--muted);
+      }
+
+      /* ==================== SECTION HEADER ==================== */
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 44px 0 8px;
+      }
+      .section-header h2 {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+      }
+      .section-header .line {
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      /* ==================== STATUS CODES ==================== */
+      .status-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+      }
+
+      /* ==================== RESPONSIVE ==================== */
+      @media (max-width: 640px) {
+        .container {
+          padding: 24px 16px 80px;
+        }
+        header.hero {
+          padding: 28px 20px 24px;
+        }
+        .title {
+          font-size: 22px;
+        }
+        .quick-nav {
+          grid-template-columns: 1fr;
+        }
+        section.card {
+          padding: 20px 18px;
+        }
+      }
+
+      /* ==================== ANIMATIONS ==================== */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      header.hero {
+        animation: fadeInUp 0.5s ease both;
+      }
+      .quick-nav {
+        animation: fadeInUp 0.5s ease 0.08s both;
+      }
+      .env-ref {
+        animation: fadeInUp 0.5s ease 0.12s both;
+      }
+      section.card:nth-of-type(1) { animation: fadeInUp 0.4s ease 0.15s both; }
+      section.card:nth-of-type(2) { animation: fadeInUp 0.4s ease 0.18s both; }
+      section.card:nth-of-type(3) { animation: fadeInUp 0.4s ease 0.21s both; }
+      section.card:nth-of-type(4) { animation: fadeInUp 0.4s ease 0.24s both; }
+      section.card:nth-of-type(5) { animation: fadeInUp 0.4s ease 0.27s both; }
+      section.card:nth-of-type(6) { animation: fadeInUp 0.4s ease 0.30s both; }
+      section.card:nth-of-type(7) { animation: fadeInUp 0.4s ease 0.33s both; }
+      section.card:nth-of-type(8) { animation: fadeInUp 0.4s ease 0.36s both; }
+      section.card:nth-of-type(9) { animation: fadeInUp 0.4s ease 0.39s both; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- ==================== HERO ==================== -->
+      <header class="hero">
+        <div class="hero-top">
+          <div>
+            <h1 class="title">
+              <span class="lock-icon">🔐</span>
+              K-Series Authentication Error Guide
+            </h1>
+            <p class="subtitle">
+              Diagnose and resolve common OAuth 2.0 / OIDC authentication errors
+              across K-Series environments.
+            </p>
+          </div>
+          <span class="version-badge" id="version-badge">v2.0 · Updated <span id="last-updated"></span></span>
+        </div>
+
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search errors… e.g. redirect_uri, invalid_grant, Client not found"
+            autocomplete="off"
+          />
+        </div>
+      </header>
+
+      <!-- ==================== QUICK NAV ==================== -->
+      <nav class="quick-nav" id="quickNav">
+        <a href="#wrong-environment">
+          <span class="nav-icon">🌐</span>
+          Wrong Environment
+        </a>
+        <a href="#incorrect-redirect-uri">
+          <span class="nav-icon">🔗</span>
+          Incorrect Redirect URI
+        </a>
+        <a href="#invalid-scope">
+          <span class="nav-icon">🔑</span>
+          Invalid Scope
+        </a>
+        <a href="#incorrect-kseries-credentials">
+          <span class="nav-icon">👤</span>
+          Invalid Login Credentials
+        </a>
+        <a href="#invalid-code-grant">
+          <span class="nav-icon">⏱️</span>
+          Invalid Code Grant
+        </a>
+        <a href="#invalid-client-credentials">
+          <span class="nav-icon">🔒</span>
+          Invalid Client Credentials
+        </a>
+        <a href="#incorrect-redirect-token-exchange">
+          <span class="nav-icon">↔️</span>
+          Redirect URI Mismatch (Token)
+        </a>
+        <a href="#invalid-refresh-token">
+          <span class="nav-icon">🔁</span>
+          Invalid Refresh Token
+        </a>
+        <a href="#unauthorized-client">
+          <span class="nav-icon">🚫</span>
+          Unauthorized Client
+        </a>
+      </nav>
+
+      <!-- ==================== ENVIRONMENT REFERENCE ==================== -->
+      <div class="env-ref">
+        <h2>📋 Environment Quick Reference</h2>
+        <div class="env-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Environment</th>
+                <th>Authorization Endpoint</th>
+                <th>Token Endpoint</th>
+                <th>Client ID Prefix</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <span class="env-label">
+                    <span class="env-dot trial"></span> Trial
+                  </span>
+                </td>
+                <td><code>auth.lsk-trial.app</code></td>
+                <td><code>auth.lsk-trial.app</code></td>
+                <td><code>devp-v2-demo</code></td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="env-label">
+                    <span class="env-dot prod"></span> Production
+                  </span>
+                </td>
+                <td><code>auth.lsk-prod.app</code></td>
+                <td><code>auth.lsk-prod.app</code></td>
+                <td><code>devp-v2</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ==================== SEARCH NO RESULTS ==================== -->
+      <div class="search-no-results" id="noResults">
+        No errors match your search. Try different keywords.
+      </div>
+
+      <!-- ================================================================= -->
+      <!--  AUTHORIZATION ERRORS                                             -->
+      <!-- ================================================================= -->
+      <div class="section-header" data-search-section>
+        <h2>Authorization Errors</h2>
+        <div class="line"></div>
+      </div>
+
+      <!-- Wrong Environment -->
+      <section class="card" id="wrong-environment" data-search="wrong environment client not found mismatch trial production lsk-prod lsk-trial devp-v2-demo">
+        <div class="card-header">
+          <h2>🌐 Wrong Environment</h2>
+          <span class="tag env">Environment Mismatch</span>
+          <a href="#wrong-environment" class="anchor-link" title="Copy link">#</a>
+        </div>
+
+        <div class="callout warning">
+          <div class="head">⚠️ Warning</div>
+          <div class="body">
+            Always verify your authorization URL matches your client's environment.
+            Mixing trial and production credentials is a common source of
+            <code class="inline">Client not found</code> errors.
+          </div>
+        </div>
+
+        <figure>
+          <a href="https://632df67d.oauthimages.pages.dev/assets/clientNotFound.png" target="_blank" rel="noopener">
+            <img
+              src="https://632df67d.oauthimages.pages.dev/assets/clientNotFound.png"
+              alt="Client not found error screenshot"
+              loading="lazy"
+            />
+          </a>
+          <figcaption>We are sorry… Client not found</figcaption>
+        </figure>
+
+        <details open>
+          <summary>Error Details &amp; Example</summary>
+          <div class="content">
+            <div class="status-row">
+              <span class="tag http">Error: Client not found</span>
+            </div>
+
+            <ul>
+              <li>
+                <strong>Client ID:</strong>
+                <code class="inline">devp-v2-demo-dasxtrial-b69ffe954c5cd33c57a79a94780eb2ab</code>
+                — belongs to <strong>trial</strong> (prefix: <code class="inline">devp-v2-demo</code>)
+              </li>
+              <li><strong>Authorization URL used:</strong></li>
+            </ul>
+
+            <div class="code-block">
+              <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+              <pre><code>https://auth.lsk-prod.app/realms/k-series/protocol/openid-connect/auth
+  ?response_type=code
+  &client_id=devp-v2-demo-dasxtrial-b69ffe954c5cd33c57a79a94780eb2ab
+  &scope=financial-api
+  &redirect_uri=https%3A%2F%2Flocalhost%2F</code></pre>
+            </div>
+
+            <div class="callout note">
+              <div class="head">📝 Note</div>
+              <div class="body">
+                The URL targets <code class="inline">lsk-prod.app</code> (production), but the
+                <code class="inline">client_id</code> is a <strong>trial</strong> client.
+                These environments are isolated — clients are not shared.
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>✅ Resolution</summary>
+          <div class="content">
+            <div class="callout resolution">
+              <div class="head">🛠 Fix</div>
+              <div class="body">
+                Match your authorization URL to your client's environment.
+                Check the client ID prefix: <code class="inline">devp-v2-demo</code> → use
+                <code class="inline">auth.lsk-trial.app</code>; no <code class="inline">demo</code> suffix → use
+                <code class="inline">auth.lsk-prod.app</code>.
+                Refer to the Environment Quick Reference table above.
+              </div>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <!-- Incorrect Redirect URI -->
+      <section class="card" id="incorrect-redirect-uri" data-search="redirect uri invalid parameter trailing slash http https mismatch redirect_uri">
+        <div class="card-header">
+          <h2>🔗 Incorrect Redirect URI</h2>
+          <span class="tag uri">URI Mismatch</span>
+          <a href="#incorrect-redirect-uri" class="anchor-link" title="Copy link">#</a>
+        </div>
+
+        <div class="callout caution">
+          <div class="head">⚠️ Caution</div>
+          <div class="body">
+            The <code class="inline">redirect_uri</code> must be an
+            <strong>exact string match</strong> — including protocol, path, and
+            trailing slash. Even a single missing <code class="inline">/</code> will cause the request to fail.
+          </div>
+        </div>
+
+        <figure>
+          <a href="https://632df67d.oauthimages.pages.dev/assets/invalid_redirect.png" target="_blank" rel="noopener">
+            <img
+              src="https://632df67d.oauthimages.pages.dev/assets/invalid_redirect.png"
+              alt="Invalid redirect URI error screenshot"
+              loading="lazy"
+            />
+          </a>
+          <figcaption>We are sorry… Invalid parameter: redirect_uri</figcaption>
+        </figure>
+
+        <details open>
+          <summary>Error Details &amp; Example</summary>
+          <div class="content">
+            <div class="status-row">
+              <span class="tag http">Error: Invalid parameter: redirect_uri</span>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 38%">Context</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Used in request</strong></td>
+                    <td><code class="inline">https://localhost</code></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Registered on server</strong></td>
+                    <td><code class="inline">https://localhost/</code></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p><strong>Common causes:</strong></p>
+            <ul>
+              <li>Trailing slash missing or incorrectly added</li>
+              <li>Typo or character encoding mismatch</li>
+              <li>Using <code class="inline">http://</code> instead of <code class="inline">https://</code></li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>✅ Resolution</summary>
+          <div class="content">
+            <div class="callout resolution">
+              <div class="head">🛠 Fix</div>
+              <div class="body">
+                Copy the <strong>exact</strong> redirect URI from the API credential provisioning email or developer portal.
+                Compare character-by-character — pay attention to trailing slashes, protocol scheme, and URL encoding.
+                If you need the redirect URI updated, contact TPS with your client ID.
+              </div>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <!-- Invalid Scope -->
+      <section class="card" id="invalid-scope" data-search="invalid scope financial-api orders-api items offline_access staff-api scope names hyphen underscore space delimited">
+        <div class="card-header">
+          <h2>🔑 Invalid Scope</h2>
+          <span class="tag scope">Scope Error</span>
+          <a href="#invalid-scope" class="anchor-link" title="Copy link">#</a>
+        </div>
+
+        <div class="callout important">
+          <div class="head">📌 Important</div>
+          <div class="body">
+            Scope names must <strong>exactly match</strong> the values configured on the authorization server.
+            Underscores vs. hyphens are a frequent mistake.
+          </div>
+        </div>
+
+        <details open>
+          <summary>Error Details, Valid Scopes &amp; Example</summary>
+          <div class="content">
+            <p><strong>Error URL returned:</strong></p>
+            <div class="code-block">
+              <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+              <pre><code>https://localhost/?error=invalid_scope
+  &error_description=Invalid+scopes%3A+financial-api+items+offline_access+orders-api
+  &iss=https%3A%2F%2Fauth.lsk-prod.app%2Frealms%2Fk-series</code></pre>
+            </div>
+
+            <p><strong>Common mistakes:</strong></p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>❌ Invalid</th>
+                    <th>✅ Correct</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code class="inline">financial_api</code></td>
+                    <td><code class="inline">financial-api</code></td>
+                  </tr>
+                  <tr>
+                    <td><code class="inline">items-api</code></td>
+                    <td><code class="inline">items</code></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p><strong>Valid scopes for K-Series clients:</strong></p>
+            <ul>
+              <li><code class="inline">financial-api</code></li>
+              <li><code class="inline">orders-api</code></li>
+              <li><code class="inline">items</code></li>
+              <li><code class="inline">offline_access</code></li>
+              <li><code class="inline">staff-api</code></li>
+            </ul>
+
+            <div class="callout tip">
+              <div class="head">💡 Tip</div>
+              <div class="body">
+                Multiple scopes must be <strong>space-delimited</strong> before URL encoding. Example:
+                <code class="inline">scope=financial-api%20orders-api%20items</code>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>✅ Resolution</summary>
+          <div class="content">
+            <div class="callout resolution">
+              <div class="head">🛠 Fix</div>
+              <div class="body">
+                Cross-reference your requested scopes against the valid scope list above.
+                Ensure you're using hyphens where required (not underscores) and that scope names
+                are space-separated in the raw value before URL encoding. Only request scopes your client has been provisioned for.
+              </div>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <!-- Incorrect K-Series User Credentials -->
+      <section class="card" id="incorrect-kseries-credentials" data-search="incorrect login credentials username password invalid login user account locked disabled realm">
+        <div class="card-header">
+          <h2>👤 Incorrect K-Series User Credentials</h2>
+          <span class="tag cred">Login Error</span>
+          <a href="#incorrect-kseries-credentials" class="anchor-link" title="Copy link">#</a>
+        </div>
+
+        <div class="callout warning">
+          <div class="head">⚠️ Warning</div>
+          <div class="body">
+            Trial and production environments maintain <strong>separate user directories</strong>.
+            Production credentials will not work in a trial environment and vice versa.
+          </div>
+        </div>
+
+        <figure>
+          <a href="https://632df67d.oauthimages.pages.dev/assets/invalidlogincredential.png" target="_blank" rel="noopener">
+            <img
+              src="https://632df67d.oauthimages.pages.dev/assets/invalidlogincredential.png"
+              alt="Invalid login credentials screenshot"
+              loading="lazy"
+            />
+          </a>
+          <figcaption>Invalid username or password</figcaption>
+        </figure>
+
+        <details>
+          <summary>Possible Causes</summary>
+          <div class="content">
+            <ul>
+              <li>Username or password is incorrect</li>
+              <li>Using production credentials in a trial environment (or vice versa)</li>
+              <li>The account does not exist in the selected product/realm</li>
+              <li>Account may be locked or disabled</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>✅ Resolution</summary>
+          <div class="content">
+            <div class="callout resolution">
+              <div class="head">🛠 Fix</div>
+              <div class="body">
+                Confirm you're logging in to the correct environment (trial vs. production).
+                Verify the username and password. If the account may be locked, contact TPS to check the account status in the appropriate realm.
+              </div>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <!-- ================================================================= -->
+      <!--  TOKEN EXCHANGE ERRORS                                            -->
+      <!-- ================================================================= -->
+      <div class="section-header" data-search-section>
+        <h2>Token Exchange Errors</h2>
+        <div class="line"></div>
+      </div>
+
+      <!-- Invalid Code Grant -->
+      <section class="card" id="invalid-code-grant" data-search="invalid grant code not valid authorization code expired single use one time 15 seconds token exchange">
+        <div class="card-header">
+          <h3>⏱️ Invalid Code Grant</h3>
+          <span class="tag token">Token Exchange</span>
+          <span class="tag http">400</span>
+          <a href="#invalid-code-grant" class="anchor-link" title="Copy link">#</a>
+        </div>
+
+        <div class="callout caution">
+          <div class="head">⚠️ Caution</div>
+          <div class="body">
+            Authorization codes are <strong>single-use</strong> and expire in approximately
+            <strong>15 seconds</strong>. Do not reuse or cache them.
+          </div>
+        </div>
+
+        <details>
+          <summary>Possible Causes &amp; Response</summary>
+          <div class="content">
+            <p><strong>Possible Causes:</strong></p>
+            <ul>
+              <li>Authorization code has expired (~15 second window)</li>
+              <li>Code has already been used (codes are one-time use)</li>
+              <li>Code is malformed, truncated, or contains a typo</li>
+            </ul>
+
+            <p><strong>Response:</strong></p>
+            <div class="code-block">
+              <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+              <pre><code>{
+  "error": "invalid_grant",
+  "error_description": "Code not valid"
+}</code></pre>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>✅ Resolution</summary>
+          <div class="content">
+            <div class="callout resolution">
+              <div class="head">🛠 Fix</div>
+              <div class="body">
+                Restart the authorization flow to obtain a fresh authorization code. Ensure your application
+                exchanges the code for tokens <strong>immediately</strong> after receiving it — automate
+                this step rather than copying manually. Never reuse a code.
+              </div>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <!-- Invalid Client Credentials -->
+      <section class="card" id="invalid-client-credentials" data-search="invalid client credentials authorization header base64 client_id client_secret Basic authentication 401">
+        <div class="card-header">
+          <h3>🔒 Invalid Client or Credentials</h3>
+          <span class="tag cred">Client Auth</span>
+          <span class="tag http">401</span>
+          <a href="#invalid-client-credentials" class="anchor-link" title="Copy link">#</a>
+        </div>
+
+        <div class="callout important">
+          <div class="head">📌 Important</div>
+          <div class="body">
+            The <code class="inline">Authorization</code> header must be present and correctly formatted as
+            <strong>Basic base64(<code class="inline">client_id:client_secret</code>)</strong>.
+          </div>
+        </div>
+
+        <details>
+          <summary>Possible Causes &amp; Response</summary>
+          <div class="content">
+            <p><strong>Possible Causes:</strong></p>
+            <ul>
+              <li><code class="inline">Authorization</code> header is missing entirely</li>
+              <li>Credentials are not Base64-encoded</li>
+              <li><code class="inline">client_id</code> or <code class="inline">client_secret</code> is incorrect</li>
+              <li>Using the wrong client credentials for the environment</li>
+            </ul>
+
+            <p><strong>Response:</strong></p>
+            <div class="code-block">
+              <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+              <pre><code>{
+  "error": "invalid_client",
+  "error_description": "Invalid client or Invalid client credentials"
+}</code></pre>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>✅ Resolution</summary>
+          <div class="content">
+            <div class="callout resolution">
+              <div class="head">🛠 Fix</div>
+              <div class="body">
+                Generate the Base64 value and set the header correctly:
+              </div>
+            </div>
+            <div class="code-block">
+              <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+              <pre><code># Generate the Base64 value
+echo -n "client_id:client_secret" | base64
+
+# Set the header
+Authorization: Basic &lt;base64_value&gt;</code></pre>
+            </div>
+            <div class="callout tip">
+              <div class="head">💡 Tip</div>
+              <div class="body">
+                Double-check you're using the correct client credentials for the target environment.
+                The <code class="inline">-n</code> flag in <code class="inline">echo</code> is critical — without it, a newline character
+                is appended, producing an incorrect Base64 value.
+              </div>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <!-- Incorrect Redirect URI (Token Exchange) -->
+      <section class="card" id="incorrect-redirect-token-exchange" data-search="incorrect redirect uri token exchange invalid grant redirect_uri mismatch trailing slash encoding">
+        <div class="card-header">
+          <h3>↔️ Incorrect Redirect URI (Token Exchange)</h3>
+          <span class="tag uri">URI Mismatch</span>
+          <span class="tag http">400</span>
+          <a href="#incorrect-redirect-token-exchange" class="anchor-link" title="Copy link">#</a>
+        </div>
+
+        <div class="callout warning">
+          <div class="head">⚠️ Warning</div>
+          <div class="body">
+            The <code class="inline">redirect_uri</code> in the <strong>token exchange request</strong>
+            must be <strong>identical</strong> to the one used in the original authorization request —
+            even though no redirect actually occurs at this step.
+          </div>
+        </div>
+
+        <details>
+          <summary>Possible Causes &amp; Response</summary>
+          <div class="content">
+            <p><strong>Possible Causes:</strong></p>
+            <ul>
+              <li><code class="inline">redirect_uri</code> in the token request doesn't match the authorization step</li>
+              <li>Trailing slash added or removed between steps</li>
+              <li>URL encoding differences between requests</li>
+            </ul>
+
+            <p><strong>Response:</strong></p>
+            <div class="code-block">
+              <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+              <pre><code>{
+  "error": "invalid_grant",
+  "error_description": "Incorrect redirect_uri"
+}</code></pre>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>✅ Resolution</summary>
+          <div class="content">
+            <div class="callout resolution">
+              <div class="head">🛠 Fix</div>
+              <div class="body">
+                Use the <strong>exact same</strong> <code class="inline">redirect_uri</code> value in both your authorization
+                request and your token exchange request. Store the value in a variable or constant to prevent drift.
+                Compare the raw strings — even URL encoding differences will cause a mismatch.
+              </div>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <!-- ================================================================= -->
+      <!--  REFRESH TOKEN ERRORS                                             -->
+      <!-- ================================================================= -->
+      <div class="section-header" data-search-section>
+        <h2>Refresh Token Errors</h2>
+        <div class="line"></div>
+      </div>
+
+      <!-- Invalid Refresh Token -->
+      <section class="card" id="invalid-refresh-token" data-search="invalid refresh token expired rotation reuse grant_type refresh_token re-authentication offline_access">
+        <div class="card-header">
+          <h3>🔁 Invalid Refresh Token</h3>
+          <span class="tag token">Refresh</span>
+          <span class="tag http">400</span>
+          <a href="#invalid-refresh-token" class="anchor-link" title="Copy link">#</a>
+        </div>
+
+        <div class="callout caution">
+          <div class="head">⚠️ Caution</div>
+          <div class="body">
+            Refresh tokens are <strong>long-lived but not permanent</strong>. An expired, reused, or
+            malformed refresh token cannot be recovered — a full re-authentication is required.
+          </div>
+        </div>
+
+        <details>
+          <summary>Possible Causes</summary>
+          <div class="content">
+            <ul>
+              <li>Refresh token has passed its expiry window</li>
+              <li>Token was already used and the server enforces rotation</li>
+              <li>Refresh token is malformed or contains a transcription error</li>
+              <li>Token belongs to a different client or environment</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>✅ Resolution</summary>
+          <div class="content">
+            <div class="callout resolution">
+              <div class="head">🛠 Fix</div>
+              <div class="body">
+                Re-authenticate the user through the full authorization flow to obtain a new refresh token.
+                Implement <strong>token rotation handling</strong> in your client: when a refresh fails with
+                <code class="inline">invalid_grant</code>, redirect the user back through the authorization flow
+                automatically rather than surfacing a raw error. Ensure <code class="inline">offline_access</code>
+                is included in your requested scopes to receive refresh tokens.
+              </div>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <!-- ================================================================= -->
+      <!--  GRANT TYPE ERRORS (NEW)                                          -->
+      <!-- ================================================================= -->
+      <div class="section-header" data-search-section>
+        <h2>Client Configuration Errors</h2>
+        <div class="line"></div>
+      </div>
+
+      <!-- Unauthorized Client -->
+      <section class="card" id="unauthorized-client" data-search="unauthorized client grant type not allowed authorization_code refresh_token client_credentials flow configuration">
+        <div class="card-header">
+          <h3>🚫 Unauthorized Client</h3>
+          <span class="tag cred">Grant Type</span>
+          <span class="tag http">400</span>
+          <a href="#unauthorized-client" class="anchor-link" title="Copy link">#</a>
+        </div>
+
+        <div class="callout important">
+          <div class="head">📌 Important</div>
+          <div class="body">
+            This error occurs when the client attempts to use a
+            <code class="inline">grant_type</code> that has not been enabled for it on the authorization server.
+          </div>
+        </div>
+
+        <details>
+          <summary>Possible Causes &amp; Response</summary>
+          <div class="content">
+            <p><strong>Possible Causes:</strong></p>
+            <ul>
+              <li>Client is not configured for the <code class="inline">authorization_code</code> grant type</li>
+              <li>Client is attempting <code class="inline">client_credentials</code> flow but is only approved for auth code flow</li>
+              <li>Attempting to use <code class="inline">refresh_token</code> grant but rotation or refresh is not enabled</li>
+              <li>Client configuration was changed or provisioned incorrectly</li>
+            </ul>
+
+            <p><strong>Response:</strong></p>
+            <div class="code-block">
+              <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+              <pre><code>{
+  "error": "unauthorized_client",
+  "error_description": "Client not allowed for direct access grants"
+}</code></pre>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>✅ Resolution</summary>
+          <div class="content">
+            <div class="callout resolution">
+              <div class="head">🛠 Fix</div>
+              <div class="body">
+                Confirm the grant type(s) your client has been provisioned for. If you require a different
+                grant type (e.g., <code class="inline">client_credentials</code>), contact TPS to update your client configuration.
+                The most common K-Series integration flow is <code class="inline">authorization_code</code> with PKCE.
+              </div>
+            </div>
+          </div>
+        </details>
+      </section>
+
+    </div>
+
+    <script>
+      // Set last updated date
+      document.getElementById("last-updated").textContent =
+        new Date().toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        });
+
+      // Copy code to clipboard
+      function copyCode(btn) {
+        const pre = btn.parentElement.querySelector("pre");
+        const code = pre.textContent;
+        navigator.clipboard.writeText(code).then(() => {
+          btn.textContent = "✅ Copied!";
+          btn.classList.add("copied");
+          setTimeout(() => {
+            btn.textContent = "📋 Copy";
+            btn.classList.remove("copied");
+          }, 2000);
+        });
+      }
+
+      // Search functionality
+      const searchInput = document.getElementById("searchInput");
+      const cards = document.querySelectorAll("section.card");
+      const sectionHeaders = document.querySelectorAll("[data-search-section]");
+      const noResults = document.getElementById("noResults");
+      const quickNav = document.getElementById("quickNav");
+
+      searchInput.addEventListener("input", function () {
+        const query = this.value.toLowerCase().trim();
+
+        if (!query) {
+          cards.forEach((c) => c.classList.remove("filtered-out"));
+          sectionHeaders.forEach((s) => (s.style.display = ""));
+          noResults.classList.remove("visible");
+          quickNav.style.display = "";
+          return;
+        }
+
+        let visibleCount = 0;
+        const keywords = query.split(/\s+/);
+
+        cards.forEach((card) => {
+          const searchData = (
+            card.getAttribute("data-search") +
+            " " +
+            card.textContent
+          ).toLowerCase();
+          const matches = keywords.every((kw) => searchData.includes(kw));
+          card.classList.toggle("filtered-out", !matches);
+          if (matches) visibleCount++;
+        });
+
+        // Hide section headers if all their children are hidden
+        sectionHeaders.forEach((header) => {
+          let next = header.nextElementSibling;
+          let anyVisible = false;
+          while (next && !next.hasAttribute("data-search-section")) {
+            if (
+              next.classList.contains("card") &&
+              !next.classList.contains("filtered-out")
+            ) {
+              anyVisible = true;
+            }
+            next = next.nextElementSibling;
+          }
+          header.style.display = anyVisible ? "" : "none";
+        });
+
+        quickNav.style.display = query ? "none" : "";
+        noResults.classList.toggle("visible", visibleCount === 0);
+      });
+
+      // Anchor link copy
+      document.querySelectorAll(".anchor-link").forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const url = window.location.origin + window.location.pathname + this.getAttribute("href");
+          navigator.clipboard.writeText(url).then(() => {
+            const original = this.textContent;
+            this.textContent = "✓";
+            setTimeout(() => (this.textContent = original), 1500);
+          });
+          // Still scroll to section
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) target.scrollIntoView({ behavior: "smooth" });
+        });
+      });
+    </script>
+  </body>
+</html>
